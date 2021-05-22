@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calculator</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="data:,">
+    </head>
+    <body>
+        <H1>Welcome to the calculator</H1>
+        <p>Enter numbers below and an operator to calculate an answer.</p>
+        <p>Valid operators are add (addition), sub (subtraction), mult (multiplication) and div (division)</p>
+        <table>
+          <tr>
+            <td>
+              Enter a number:
+            </td>
+            <td>
+              Enter an operator:
+            </td>
+            <td>
+              Enter a number:
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" id="leftNum">
+            </td>
+            <td>
+              <input type="text" id="operator">
+            </td>
+            <td>
+              <input type="text" id="rightNum">
+            </td>
+          </tr>
+        </table>
+        <button onclick="calculate()">Calculate</button>
+        </div>
+        <script>
+          function calculate() {
+            let leftNum = document.getElementById('leftNum').value;
+            let operator = document.getElementById('operator').value;
+            let rightNum = document.getElementById('rightNum').value;
+            let query = `left=${leftNum}&right=${rightNum}&operator=${operator}`;
+            serverRequest(query);
+          }
+
+          function serverRequest(query) {
+            let url = 'http://localhost:5000/calculate?' + query;
+            let request_content = {
+              method: 'GET',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+            }
+            fetch(url, request_content
+            ).then(response => {
+                response.json().then(json => {
+                  let parsed_json = JSON.parse(json);
+                  let message = parsed_json.message;
+                  let data = parsed_json.data;
+                  alert(`${message} - the answer was: ${data}`)
+                });
+            }).catch((error) => {
+              console.log('Error: ' + error.message);
+            });
+          }
+        </script>
+    </body>
+</html>

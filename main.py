@@ -2,6 +2,7 @@
 import connexion
 import argparse
 from waitress import serve
+from flask import render_template
 
 # Create server app and load yml-file with api routes
 app = connexion.FlaskApp(__name__, specification_dir=".")
@@ -11,8 +12,9 @@ app.add_api("api_routes.yml")
 @app.route("/")
 def index():
     """"""
-    return "Welcome to the calculator"
-    pass
+    return render_template(
+        "index.html",
+        )
 
 if __name__ == "__main__":
 
