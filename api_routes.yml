@@ -1,0 +1,33 @@
+swagger: "2.0"
+info:
+  description: Calculator API paths
+  version: "1.0.0"
+  title: Calculator API paths
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+basePath: "/"
+
+# Paths supported by the server application
+paths:
+  /calculate:
+    get:
+      operationId: "api_methods.calculate"
+      parameters:
+        - in: query
+          name: left
+          required: true
+          type: string
+        - in: query
+          name: right
+          required: true
+          type: string
+        - in: query
+          name: operator
+          required: true
+          type: string
+      responses:
+        200:
+          description: "OK"
